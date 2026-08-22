@@ -2,9 +2,9 @@ from core.base_exercise import BaseExercise
 
 
 class ShoulderPressDetector(BaseExercise):
-    UP_THRESHOLD = 160
-    DOWN_THRESHOLD = 90
-    MIN_VISIBILITY = 0.7
+    UP_THRESHOLD = 150
+    DOWN_THRESHOLD = 100
+    MIN_VISIBILITY = 0.5
 
     LEFT_SHOULDER = 11
     LEFT_ELBOW = 13

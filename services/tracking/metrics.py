@@ -5,21 +5,25 @@ from services.persistence.exercise_repository import add_exercise
 
 
 def sync_metrics_update(context):
+    print(f"[DEBUG] sync_metrics_update called. state={getattr(context, 'state', None)}")
     if not context or not hasattr(context, "state") or not context.state.playing:
         return
     
     processor = getattr(context, "video_processor", None)
+    print(f"[DEBUG] processor={processor}")
 
     if not processor:
         return 
     
     exercise = st.session_state.get("exercise_type")
+    print(f"[DEBUG] exercise={exercise}")
 
     if not exercise:
         return
     
     processor.set_exercise(exercise)
     latest_metrics = processor.get_latest_metrics()
+    print(f"[DEBUG] latest_metrics={latest_metrics}")
 
     if not latest_metrics:
         return

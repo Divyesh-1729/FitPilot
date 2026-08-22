@@ -76,8 +76,9 @@ def main():
     with st.sidebar:
         st.title("🏋️‍♂️ Apna AI Coach")
 
-        if st.session_state.username:
-            st.caption(f"👤 Login as {st.session_state.username}")
+        username = st.session_state.get("username")
+        if username:
+            st.caption(f"👤 Login as {username}")
 
         st.divider()
 

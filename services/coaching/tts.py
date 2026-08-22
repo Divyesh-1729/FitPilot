@@ -11,9 +11,11 @@ class TextToSpeech:
         
         buffer = BytesIO()
 
-        gTTS(text=cleaned, lang=lang).write_to_fp(buffer)
-
-        buffer.seek(0)
-
-        return buffer.read()
+        try:
+            gTTS(text=cleaned, lang=lang).write_to_fp(buffer)
+            buffer.seek(0)
+            return buffer.read()
+        except Exception as e:
+            print(f"TTS Error: {e}")
+            return None
     

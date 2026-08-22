@@ -2,9 +2,9 @@ from core.base_exercise import BaseExercise
 
 
 class PushUpDetector(BaseExercise):
-    DOWN_THRESHOLD = 90
-    UP_THRESHOLD = 160
-    MIN_VISIBILITY = 0.7
+    DOWN_THRESHOLD = 95
+    UP_THRESHOLD = 150
+    MIN_VISIBILITY = 0.5
     HIP_SAG_TOLERANCE = 0.08
 
     LEFT_SHOULDER = 11
@@ -71,19 +71,23 @@ class PushUpDetector(BaseExercise):
                 self.stage = "up"
                 self.reps += 1
 
-        if body_angle > 160:
-            body_alignment = "Straight"
-        elif body_angle > 140:
-            body_alignment = "Slight Bend"
-        else:
-            body_alignment = "Poor Form"
+        if self.stage is not None:
+            if body_angle > 160:
+                body_alignment = "Straight"
+            elif body_angle > 140:
+                body_alignment = "Slight Bend"
+            else:
+                body_alignment = "Poor Form"
 
-        if abs(hip_deviation) <= self.HIP_SAG_TOLERANCE:
-            hip_status = "LEVEL"
-        elif hip_deviation > self.HIP_SAG_TOLERANCE:
-            hip_status = "SAGGING"
+            if abs(hip_deviation) <= self.HIP_SAG_TOLERANCE:
+                hip_status = "LEVEL"
+            elif hip_deviation > self.HIP_SAG_TOLERANCE:
+                hip_status = "SAGGING"
+            else:
+                hip_status = "PIKED UP"
         else:
-            hip_status = "PIKED UP"
+            body_alignment = "N/A"
+            hip_status = "N/A"
 
         return {
             "reps": self.reps,

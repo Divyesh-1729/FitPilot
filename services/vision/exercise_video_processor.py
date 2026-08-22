@@ -68,7 +68,7 @@ class VideoProcessorClass(VideoProcessorBase):
             p1 = landmarks[start_idx]
             p2 = landmarks[end_idx]
 
-            if p1.visibility > 0.7 and p2.visibility > 0.7:
+            if p1.visibility > 0.5 and p2.visibility > 0.5:
                 cv2.line(
                     img,
                     (int(p1.x * w), int(p1.y * h)),
@@ -78,7 +78,7 @@ class VideoProcessorClass(VideoProcessorBase):
                 )
         
         for lm in landmarks:
-            if lm.visibility > 0.7:
+            if lm.visibility > 0.5:
                 cv2.circle(
                     img, 
                     (int(lm.x * w), int(lm.y * h)),
@@ -196,7 +196,7 @@ class VideoProcessorClass(VideoProcessorBase):
 
         mp_image = mp.Image(
             image_format=mp.ImageFormat.SRGB,
-            data=cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            data=cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         )
 
         self._frame_timestamps_ms += 30
@@ -204,6 +204,7 @@ class VideoProcessorClass(VideoProcessorBase):
 
         if result.pose_landmarks:
             landmarks = result.pose_landmarks[0]
+            print(f"[RECV DEBUG] Pose detected! {len(landmarks)} landmarks")
 
             self._draw_skeleton(image, landmarks)
 
@@ -213,6 +214,7 @@ class VideoProcessorClass(VideoProcessorBase):
 
             if detector:
                 metrics = detector.process(landmarks)
+                print(f"[RECV DEBUG] ex={ex_type} reps={metrics.get('reps')} stage={getattr(detector, 'stage', '?')}")
 
                 metrics["pose_detected"] = True
 

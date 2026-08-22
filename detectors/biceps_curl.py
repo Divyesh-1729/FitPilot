@@ -3,9 +3,9 @@ from core.base_exercise import BaseExercise
 
 
 class BicepsCurlDetector(BaseExercise):
-    UP_THRESHOLD = 50
-    DOWN_THRESHOLD = 160
-    MIN_VISIBILITY = 0.7
+    UP_THRESHOLD = 65
+    DOWN_THRESHOLD = 150
+    MIN_VISIBILITY = 0.5
     ELBOW_DRIFT_TOLERANCE = 0.06
     SWING_THRESHOLD = 15
 
@@ -20,12 +20,10 @@ class BicepsCurlDetector(BaseExercise):
 
     def __init__(self):
         super().__init__()
-        self._shoulder_x_baseline = None
 
     def reset(self) -> None:
         self.reps = 0
         self.stage = None
-        self._shoulder_x_baseline = None
 
     def process(self, landmarks) -> dict:
         left_vis = landmarks[self.LEFT_ELBOW].visibility
